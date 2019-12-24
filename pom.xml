@@ -50,6 +50,11 @@
             <artifactId>otaibe-commons-quarkus-elasticsearch</artifactId>
             <version>master-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>com.github.tpenakov.otaibe-commons-quarkus</groupId>
+            <artifactId>otaibe-commons-quarkus-rest</artifactId>
+            <version>master-SNAPSHOT</version>
+        </dependency>
 
         <dependency>
             <groupId>io.quarkus</groupId>

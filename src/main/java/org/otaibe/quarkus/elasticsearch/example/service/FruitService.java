@@ -28,6 +28,12 @@ public class FruitService {
         return getDao().findById(entity);
     }
 
+    public Mono<Fruit> findById(String id) {
+        return Mono.just(Fruit.of(id, null, null, null, null))
+                .flatMap(entity -> findById(entity))
+                ;
+    }
+
     public Flux<Fruit> findByExternalRefId(String value) {
         return getDao().findByExternalRefId(value);
     }
@@ -40,7 +46,7 @@ public class FruitService {
         return getDao().findByDescription(value);
     }
 
-    public Flux<Fruit> findByNameAndDescription(String value) {
-        return getDao().findByDescription(value);
+    public Flux<Fruit> findByNameOrDescription(String value) {
+        return getDao().findByNameOrDescription(value);
     }
 }

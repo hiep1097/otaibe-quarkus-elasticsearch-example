@@ -44,7 +44,7 @@ public class FruitDaoImpl extends AbstractElasticsearchReactiveDaoImplementation
                 .flatMap(aBoolean -> createIndex())
                 .doOnNext(aBoolean -> log.info("index {} created={}", getTableName(), aBoolean))
                 .doOnTerminate(() -> log.info("init completed"))
-                .subscribe() //you can use subscribe here ...
+                .block()
         ;
     }
 
@@ -70,7 +70,7 @@ public class FruitDaoImpl extends AbstractElasticsearchReactiveDaoImplementation
         return findByMatch(Fruit.NAME, value);
     }
 
-    public Flux<Fruit> findByNameAndDescription(String value) {
+    public Flux<Fruit> findByNameOrDescription(String value) {
         Map<String, Object> query = new HashMap<>();
         query.put(Fruit.NAME, value);
         query.put(Fruit.DESCRIPTION, value);
