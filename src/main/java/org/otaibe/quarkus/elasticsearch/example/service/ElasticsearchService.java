@@ -27,7 +27,4 @@ public class ElasticsearchService extends AbstractElasticsearchService {
         super.shutdown();
         log.info("shutdown completed");
     }
-
-
-
 }
