@@ -4,7 +4,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.otaibe.quarkus.elasticsearch.example</groupId>
-    <artifactId>otaibe-quarkus-${otaibe-commons-quarkus.version}</artifactId>
+    <artifactId>otaibe-quarkus-elasticsearch-example</artifactId>
     <version>1.0-SNAPSHOT</version>
     <properties>
         <quarkus-plugin.version>1.1.0.Final</quarkus-plugin.version>
