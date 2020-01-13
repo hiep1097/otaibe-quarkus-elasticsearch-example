@@ -1,0 +1,11 @@
+[
+  {
+    "name" : "org.otaibe.quarkus.elasticsearch.example.domain.Fruit",
+    "allDeclaredConstructors" : true,
+    "allPublicConstructors" : true,
+    "allDeclaredMethods" : true,
+    "allPublicMethods" : true,
+    "allDeclaredFields" : true,
+    "allPublicFields" : true
+  }
+]

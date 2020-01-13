@@ -5,6 +5,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.otaibe.commons.quarkus.core.utils.JsonUtils;
@@ -18,6 +19,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 import java.net.URI;
+import java.util.Optional;
 
 import static io.restassured.RestAssured.given;
 
@@ -25,6 +27,9 @@ import static io.restassured.RestAssured.given;
 @Getter(value = AccessLevel.PROTECTED)
 @Slf4j
 public class FruitResourceTest {
+
+    @ConfigProperty(name = "service.http.host")
+    Optional<URI> host;
 
     @Inject
     TestUtils testUtils;
@@ -42,7 +47,7 @@ public class FruitResourceTest {
                 .when()
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
                 .body(apple)
-                .post(FruitResource.ROOT_PATH)
+                .post(getUri(FruitResource.ROOT_PATH))
                 .then()
                 .statusCode(200)
                 .extract()
@@ -55,7 +60,7 @@ public class FruitResourceTest {
                 .build();
 
         Fruit foundApple = given()
-                .when().get(findByIdPath.getPath())
+                .when().get(getUri(findByIdPath.getPath()).getPath())
                 .then()
                 .statusCode(200)
                 .extract()
@@ -73,6 +78,20 @@ public class FruitResourceTest {
                 ;
 
         log.info("restEndpointsTest end");
+    }
+
+    private URI getUri(String path) {
+        return getUriBuilder(path)
+                .build();
+    }
+
+    private UriBuilder getUriBuilder(String path) {
+        return getHost()
+                .map(uri -> UriBuilder.fromUri(uri))
+                .map(uriBuilder -> uriBuilder.path(path))
+                .orElse(UriBuilder
+                        .fromPath(path)
+                );
     }
 
 }
