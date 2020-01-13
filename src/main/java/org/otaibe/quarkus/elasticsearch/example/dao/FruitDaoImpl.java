@@ -24,7 +24,7 @@ import java.util.Map;
 @Slf4j
 public class FruitDaoImpl extends AbstractElasticsearchReactiveDaoImplementation<Fruit> {
 
-    public static final String TABLE_NAME_PREFFIX = "fruit_";
+    public static final String TABLE_NAME_PREFFIX = "fruit";
     public static final String ENGLISH = "english";
 
     @Inject
@@ -36,16 +36,8 @@ public class FruitDaoImpl extends AbstractElasticsearchReactiveDaoImplementation
 
     public void init(@Observes StartupEvent event) {
         log.info("init started");
-        super.init();
         setTableName(TABLE_NAME_PREFFIX);
-        ensureIndex()
-                .doOnNext(aBoolean -> log.info("index {} exists={}", getTableName(), aBoolean))
-                .filter(aBoolean -> !aBoolean)
-                .flatMap(aBoolean -> createIndex())
-                .doOnNext(aBoolean -> log.info("index {} created={}", getTableName(), aBoolean))
-                .doOnTerminate(() -> log.info("init completed"))
-                .block()
-        ;
+        super.init();
     }
 
     @Override
