@@ -23,6 +23,7 @@ import java.util.concurrent.CompletionStage;
 public class FruitResource {
 
     public static final String ROOT_PATH = "/fruits";
+    public static final String ID = "id";
 
     @Inject
     FruitService service;
@@ -30,15 +31,16 @@ public class FruitResource {
     ControllerUtils controllerUtils;
 
     @GET
-    @Path("{id}")
+    @Path("{" + ID + "}")
     @Produces(MediaType.APPLICATION_JSON)
-    public CompletionStage<Response> findById(@NotBlank String id) {
+    public CompletionStage<Response> findById(@PathParam(ID) @NotBlank String id) {
         CompletableFuture<Response> result = new CompletableFuture<>();
         getControllerUtils().processResult(result,
                 getService().findById(id),
                 new Fruit(),
                 fruit1 -> StringUtils.isNotBlank(fruit1.getId())
         )
+                .subscriberContext(context -> context.put(ControllerUtils.CLIENT_ERROR_KEY, Response.Status.NOT_FOUND))
                 .subscribe()
         ;
         return result;

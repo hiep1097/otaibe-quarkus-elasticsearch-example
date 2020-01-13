@@ -3,6 +3,7 @@ package org.otaibe.quarkus.elasticsearch.example.service;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.otaibe.quarkus.elasticsearch.example.dao.FruitDaoImpl;
 import org.otaibe.quarkus.elasticsearch.example.domain.Fruit;
 import reactor.core.publisher.Flux;
@@ -48,5 +49,12 @@ public class FruitService {
 
     public Flux<Fruit> findByNameOrDescription(String value) {
         return getDao().findByNameOrDescription(value);
+    }
+
+    public Mono<Boolean> delete(Fruit entity) {
+        return Mono.just(entity.getId())
+                .filter(s -> StringUtils.isNotBlank(s))
+                .flatMap(s -> getDao().deleteById(entity))
+                .defaultIfEmpty(false);
     }
 }
