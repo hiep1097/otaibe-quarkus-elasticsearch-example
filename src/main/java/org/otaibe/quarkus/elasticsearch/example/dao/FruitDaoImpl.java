@@ -51,7 +51,7 @@ public class FruitDaoImpl extends AbstractElasticsearchReactiveDaoImplementation
     }
 
     public Flux<Fruit> findByExternalRefId(String value) {
-        return findByMatch(Fruit.EXT_REF_ID, value);
+        return findByExactMatch(Fruit.EXT_REF_ID, value);
     }
 
     public Flux<Fruit> findByName(String value) {
