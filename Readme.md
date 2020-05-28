@@ -1,4 +1,4 @@
-### Dependencies
+### Build and Play
 - You have to start elasticsearch:
 
 ```
